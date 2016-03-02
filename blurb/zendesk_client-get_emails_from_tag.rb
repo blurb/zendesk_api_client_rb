@@ -26,7 +26,7 @@ def process_item(item)
   logger.info "#{item.result_type},#{item.id},#{item.via.source.from.address}"
 end
 
-search_results = client.search(:query => "type:ticket tags:" + ARGV[2])
+search_results = client.search(:query => "type:ticket tags:#{ARGV[2]}")
 
 search_results.all(1) {|item| process_item(item)}
 
