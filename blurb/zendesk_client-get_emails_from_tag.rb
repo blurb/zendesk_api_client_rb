@@ -1,9 +1,10 @@
 require 'zendesk_api'
 require 'logger'
 
+LOGGER = Logger.new(STDOUT)
+
 if ARGV[0].nil? || ARGV[1].nil? || ARGV[2].nil?
-  logger = Logger.new(STDOUT)
-  logger.info("Usage: ruby zendesk_client-get_emails_from_tag.rb 'blurb_zendesk_email' 'password' 'zendesk_tag'")
+  LOGGER.info("Usage: ruby zendesk_client-get_emails_from_tag.rb 'blurb_zendesk_email' 'password' 'zendesk_tag'")
   abort
 end
 
@@ -22,8 +23,7 @@ client = ZendeskAPI::Client.new do |config|
 end
 
 def process_item(item)
-  logger = Logger.new(STDOUT) 
-  logger.info "#{item.result_type},#{item.id},#{item.via.source.from.address}"
+  LOGGER.info "#{item.result_type},#{item.id},#{item.via.source.from.address}"
 end
 
 search_results = client.search(:query => "type:ticket tags:#{ARGV[2]}")
